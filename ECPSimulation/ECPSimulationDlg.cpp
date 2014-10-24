@@ -7,10 +7,12 @@
 #include "ECPSimulationDlg.h"
 #include "afxdialogex.h"
 #include "Lon2S4230.h"
+#include "HandleMessage.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 CLon2S4230 lonOP;
+CHandleMessage handleOP;
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
@@ -65,6 +67,7 @@ BEGIN_MESSAGE_MAP(CECPSimulationDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON1, &CECPSimulationDlg::OnBnClickedButton1)
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -102,7 +105,9 @@ BOOL CECPSimulationDlg::OnInitDialog()
 	// TODO: 在此添加额外的初始化代码
 	m_cComboBox.AddString((LPCTSTR)"0号报文");
 	m_cComboBox.AddString((LPCTSTR)"1号报文");
-	lonOP.Open("LON1");
+	int res=lonOP.Open("LON1");
+	if(res!=-1)
+		SetTimer(1,50,NULL);
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -185,3 +190,35 @@ void CECPSimulationDlg::SendMessageByID(int messageID)
 		break;
 	}
 }
+
+
+void CECPSimulationDlg::OnTimer(UINT_PTR nIDEvent)
+	{
+		switch(nIDEvent)
+			{
+				case 1:
+					{
+					   lonOP.Read(100);
+					   Handle_Message();
+					}
+			}
+
+		CDialogEx::OnTimer(nIDEvent);
+	}
+
+
+// 处理收到的数据
+void CECPSimulationDlg::Handle_Message(void)
+	{
+	    switch(lonOP.getMsgInID())
+			{
+				case MSG_DEVICE_INFO_CONTROL_QUERY :handleOP.Handle_Message_3();
+					break;
+				case MSG_ASSIGN_NODE_ID: handleOP.Handle_Message_4();
+					break;
+				case MSG_HEU_BEACON :handleOP.Handle_Message_13();
+					break;
+				default:
+					break; 
+			}
+	}

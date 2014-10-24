@@ -34,7 +34,7 @@ LDVCode CLon2S4230::Open(LPCSTR pIdentifier)
 {
 	if (m_OpenLdvHandle!=-1)
 	{
-		return 0;
+		return -1;
 	}
 	//LDVCode eResult = ldv_open_cap(pIdentifier, &m_OpenLdvHandle, LDV_DEVCAP_L2, m_hWnd, m_lParam);
 	LDVCode eResult = ldv_open_cap(pIdentifier, &m_OpenLdvHandle, LDV_DEVCAP_L2, 0, 0);
@@ -473,6 +473,35 @@ void CLon2S4230::msg_put(Byte TPDUtype,Byte Priority)
  Byte CLon2S4230::getMsgOutID()
 	 {
 	    return msg_out.msg_data.exp.data[0];
+	 }
+
+ bool CLon2S4230::isBroadCastAddr()
+	 {
+	 if (msg_in.msg_hdr.exp.AddrFmt==BROADCAST)
+		 {
+		 return true;
+		 }
+	 else
+		 return false;
+	 }
+  bool CLon2S4230::isNidAddr()
+	  {
+	  if (msg_in.msg_hdr.exp.AddrFmt==NEURON_ID)
+		  {
+		  return true;
+		  }
+	  else
+		  return false;
+	  }
+ bool CLon2S4230::isSubnetNodeAddr()
+	 {
+	 if (msg_in.msg_hdr.exp.AddrFmt==SUBNET_NODE)
+		 {
+		 return true;
+		 }
+	 else
+		 return false;
+	 
 	 }
 
 

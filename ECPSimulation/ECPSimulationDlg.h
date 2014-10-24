@@ -35,4 +35,7 @@ public:
 	afx_msg void OnBnClickedButton1();
 	void SendMessageByID(int messageID);
 	
-};
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	// 处理收到的数据
+	void Handle_Message(void);
+	};

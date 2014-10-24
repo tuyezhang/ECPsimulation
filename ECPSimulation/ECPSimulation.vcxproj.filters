@@ -57,6 +57,12 @@
     <ClInclude Include="CvirtualCCD.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="HandleMessage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="VirtualCCDManage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ECPSimulation.cpp">
@@ -75,6 +81,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CvirtualCCD.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="HandleMessage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="VirtualCCDManage.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

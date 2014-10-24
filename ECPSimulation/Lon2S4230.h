@@ -15,6 +15,9 @@ public:
 	static LDVCode  Read(short uLen);	 
 	static Byte getMsgInID();
 	static Byte getMsgOutID();
+	static bool isBroadCastAddr();
+	static bool isNidAddr();
+	static bool isSubnetNodeAddr();
 
 private:
 	static LDVCode  Write(void* pMsg, short uLen);
