@@ -13,6 +13,9 @@ CUtil::~CUtil(void)
 
 Byte CUtil::get_Msg_length(Byte msg_id)
 {
+
+
+
 	switch(msg_id)
 	{
 	case MSG_CAR_STATIC_INFO:				return 34;

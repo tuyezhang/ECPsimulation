@@ -54,6 +54,9 @@
     <ClInclude Include="Lon2S4230.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CvirtualCCD.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ECPSimulation.cpp">
@@ -69,6 +72,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Util.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CvirtualCCD.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

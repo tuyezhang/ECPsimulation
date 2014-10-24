@@ -101,6 +101,7 @@
     <None Include="res\ECPSimulation.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CvirtualCCD.h" />
     <ClInclude Include="ECPSimulation.h" />
     <ClInclude Include="ECPSimulationDlg.h" />
     <ClInclude Include="ldv32.h" />
@@ -113,6 +114,7 @@
     <ClInclude Include="Util.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CvirtualCCD.cpp" />
     <ClCompile Include="ECPSimulation.cpp" />
     <ClCompile Include="ECPSimulationDlg.cpp" />
     <ClCompile Include="Lon2S4230.cpp" />
