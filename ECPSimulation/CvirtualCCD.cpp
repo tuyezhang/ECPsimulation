@@ -80,7 +80,7 @@ int CvirtualCCD::Send_Msg_by_ID(Byte msg_id,Byte msg_type,Byte msg_pri, Byte msg
 		return -1;
 	}
 	
-	lonop.setAddrSubNetNode(3,3,1,2);//这个还要改为具体的 subnet node
+	lonop.setAddrSubNetNode(Node_Info.Subnet,Node_Info.Node,1,2);//这个还要改为具体的 subnet node
 	lonop.msg_put(msg_type,msg_pri);
 	return 0;
 	
@@ -185,7 +185,7 @@ void   CvirtualCCD:: Set_CCD_Node(Byte node)
 
 bool  CvirtualCCD::Is_NID_Match(Byte * nid,Byte length)
 	{
-	    if (length!=6)
+	    if (length!=6||nid==NULL)
 	    {
 			return false;
 	    }
@@ -197,6 +197,15 @@ bool  CvirtualCCD::Is_NID_Match(Byte * nid,Byte length)
 			}
 		}
 		return true;
+	}
+
+bool CvirtualCCD::Is_Subnet_Node(Byte subnet,byte node)
+	{
+	    if (subnet==Get_CCD_Subnet()&&node==Get_CCD_Node())
+	    {
+		return true;
+	    }
+		return false;
 	}
 
 bool  CvirtualCCD::Set_CCD_Lock(bool isLock)

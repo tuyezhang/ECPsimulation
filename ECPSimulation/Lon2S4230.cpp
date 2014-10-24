@@ -466,6 +466,15 @@ void CLon2S4230::msg_put(Byte TPDUtype,Byte Priority)
 	Write(data,(short)vInts.size());
 }
 
+ Byte CLon2S4230::getMsgInID()
+	 {
+	    return msg_in.msg_data.exp.data[0];
+	 }
+ Byte CLon2S4230::getMsgOutID()
+	 {
+	    return msg_out.msg_data.exp.data[0];
+	 }
+
 
 
 

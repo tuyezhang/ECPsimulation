@@ -13,6 +13,8 @@ public:
 	static LDVCode  Open(LPCSTR pIdentifier);	
 	static LDVCode  Close();	
 	static LDVCode  Read(short uLen);	 
+	static Byte getMsgInID();
+	static Byte getMsgOutID();
 
 private:
 	static LDVCode  Write(void* pMsg, short uLen);
