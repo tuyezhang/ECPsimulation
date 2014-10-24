@@ -43,10 +43,7 @@ public:
 	//可能还有一些 get id或者其他的
 };
 
-short CLon2S4230::m_OpenLdvHandle=-1;
-ExpApp CLon2S4230::msg_in;
-ExpApp CLon2S4230::msg_out;
-S4230Header CLon2S4230::s4230header;
+
 
 
 

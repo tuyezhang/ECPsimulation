@@ -15,7 +15,10 @@ read();
 
 
 */
-
+short CLon2S4230::m_OpenLdvHandle=-1;
+ExpApp CLon2S4230::msg_in;
+ExpApp CLon2S4230::msg_out;
+S4230Header CLon2S4230::s4230header;
 CLon2S4230::CLon2S4230(void)
 {
 	msg_init();
