@@ -20,6 +20,7 @@ public:
 	bool  Is_NID_Match(Byte * nid,Byte length);
 	bool  Is_Subnet_Node(Byte sunbet,byte node);
 	bool  Set_CCD_Lock(bool isLock);
+	void Send_CCD_Info();
 	//CCD内部信息
 private:						//所有的设备的状态和信息都是私有的，需要用响应的函数访问，修改
 	Byte Lock_Status;										//开锁，锁闭状态
