@@ -2,14 +2,14 @@
 #include "sunnyDefine.h"
 #include "Util.h"
 #include "Lon2S4230.h"
-
+#include <Windows.h>
 class CvirtualCCD
 {
     public:
         CvirtualCCD( void );
         ~CvirtualCCD( void );
         int Send_Msg_by_ID( Byte msg_id, Byte msg_type, Byte msg_pri = NONPRIORITY, Byte msg_ver = 0 );
-
+		unsigned int m_Elapse;
     public:
         Byte *Msg_Send_Buffer;
         CCD_Exception_Flags Exception_Flags;	//异常标志位
@@ -23,6 +23,10 @@ class CvirtualCCD
         bool  Is_Subnet_Node( Byte sunbet, byte node );
         bool  Set_CCD_Lock( bool isLock );
         void Send_CCD_Info();
+		void Send_CCD_Info(int randomizing_interval);
+		void Set_CCD_Node_Information(int index);
+		void Set_CCD_Car_Info(int index);
+		void Set_CCD_Status(int index);
         //CCD内部信息
     private:						//所有的设备的状态和信息都是私有的，需要用响应的函数访问，修改
         Byte Lock_Status;										//开锁，锁闭状态
@@ -40,5 +44,8 @@ class CvirtualCCD
         void Set_Msg_data_27( byte msg_ver, byte length ); //设置发送的27号报文数据
 		CUtil util;
 		CLon2S4230 lonop;
+		
+		HANDLE m_hThread;
+		static DWORD WINAPI ThreadFunc (LPVOID pParam);
 };
 

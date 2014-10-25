@@ -55,7 +55,8 @@ void CHandleMessage:: Handle_Message_3()
 
         if ( lonOP.isBroadCastAddr() )
         {
-            //pSunnyDlg->MainCreateThread(msg_s.randomizing_interval);
+            
+			  ccdManageOP.Send_CCD_Info_ALL(msg_s.Randomizing_Interval);
 
         }
         else if ( lonOP.isNidAddr() )
