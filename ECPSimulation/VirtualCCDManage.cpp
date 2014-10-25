@@ -1,7 +1,6 @@
 #include "StdAfx.h"
 #include "VirtualCCDManage.h"
-#include "Lon2S4230.h"
-extern CLon2S4230 lonOP;
+
 
 CVirtualCCDManage::CVirtualCCDManage( void )
 {

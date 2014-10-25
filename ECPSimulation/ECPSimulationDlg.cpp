@@ -6,13 +6,11 @@
 #include "ECPSimulation.h"
 #include "ECPSimulationDlg.h"
 #include "afxdialogex.h"
-#include "Lon2S4230.h"
-#include "HandleMessage.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-CLon2S4230 lonOP;
-CHandleMessage handleOP;
+
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 

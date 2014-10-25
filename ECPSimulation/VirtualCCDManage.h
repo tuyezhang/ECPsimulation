@@ -1,5 +1,7 @@
 #pragma once
 #include "CvirtualCCD.h"
+#include "Lon2S4230.h"
+
 #define  CAR_NUM_DEF 20
 class CVirtualCCDManage
 {
@@ -19,5 +21,6 @@ class CVirtualCCDManage
     private:
         int car_num;
         CvirtualCCD * pCCD;
+		 CLon2S4230 lonOP;
 };
 

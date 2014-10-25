@@ -1,10 +1,7 @@
 #include "StdAfx.h"
 #include "HandleMessage.h"
 #include "sunnyDefine.h"
-#include "Lon2S4230.h"
-#include "VirtualCCDManage.h"
-extern CLon2S4230 lonOP;
-CVirtualCCDManage ccdManageOP;
+
 CHandleMessage::CHandleMessage( void )
 {
 }
