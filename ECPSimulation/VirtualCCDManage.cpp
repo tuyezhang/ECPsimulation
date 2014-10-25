@@ -7,7 +7,7 @@ CVirtualCCDManage::CVirtualCCDManage( void )
     car_num = CAR_NUM_DEF;
 
     pCCD = new CvirtualCCD[car_num];
-	Set_CCD_ALL_Data();
+    Set_CCD_ALL_Data();
 
 
 }
@@ -29,11 +29,16 @@ CvirtualCCD *CVirtualCCDManage::Get_CCD_pObj( int i )
 void CVirtualCCDManage::Set_CCD_Num( int ccd_num )
 {
     CvirtualCCD *pCCDtemp = pCCD;
-	car_num=ccd_num;
+    car_num = ccd_num;
     CvirtualCCD *pCCD = new CvirtualCCD[car_num];
     delete []pCCDtemp;
-	Set_CCD_ALL_Data();
+    Set_CCD_ALL_Data();
 
+}
+
+int CVirtualCCDManage:: Get_CCD_Num()
+{
+	return car_num;
 }
 void CVirtualCCDManage::Set_All_CCD_Lock()
 {
@@ -93,68 +98,69 @@ void CVirtualCCDManage:: Send_CCD_Info( int index )
     {
         return;
     }
-	pCCD[index].Send_CCD_Info();
+
+    pCCD[index].Send_CCD_Info();
 }
 
-void CVirtualCCDManage::Send_CCD_Info_ALL(int randomizing_interval)
-	{
-		for(int i=0;i<car_num;i++)
-		{
-			pCCD[i].Send_CCD_Info(randomizing_interval);
-		}
-	}
+void CVirtualCCDManage::Send_CCD_Info_ALL( int randomizing_interval )
+{
+    for( int i = 0; i < car_num; i++ )
+    {
+        pCCD[i].Send_CCD_Info( randomizing_interval );
+    }
+}
 
 void CVirtualCCDManage::Set_CCD_Node_Information()
 {
-	for (int i=0;i<car_num;i++)
-	{
-		pCCD[i].Set_CCD_Node_Information(i);
-	}
+    for ( int i = 0; i < car_num; i++ )
+    {
+        pCCD[i].Set_CCD_Node_Information( i );
+    }
 
 }
 void CVirtualCCDManage::Set_CCD_Car_Info()
 {
-	for (int i=0;i<car_num;i++)
-	{
-		pCCD[i].Set_CCD_Car_Info(i);
-	}
+    for ( int i = 0; i < car_num; i++ )
+    {
+        pCCD[i].Set_CCD_Car_Info( i );
+    }
 }
 void CVirtualCCDManage::Set_CCD_Status()
 {
-	for (int i=0;i<car_num;i++)
-	{
-		pCCD[i].Set_CCD_Status(i);
-	}
+    for ( int i = 0; i < car_num; i++ )
+    {
+        pCCD[i].Set_CCD_Status( i );
+    }
 
 }
 void CVirtualCCDManage::Set_CCD_ALL_Data()
 {
-	Set_CCD_Node_Information();
-	Set_CCD_Car_Info();
-	Set_CCD_Status();
+    Set_CCD_Node_Information();
+    Set_CCD_Car_Info();
+    Set_CCD_Status();
 }
 
-int CVirtualCCDManage::Return_Match_CCD_Nid(Byte * nid, Byte length)//返回 具有给定 CCD   NID  的索引
+int CVirtualCCDManage::Return_Match_CCD_Nid( Byte * nid, Byte length ) //返回 具有给定 CCD   NID  的索引
 {
-	for ( int i = 0; i < car_num; i++ )
-	{
-		if ( pCCD[i].Is_NID_Match( nid, 6 ) )
-		{
-			return i;
-		}
-	}
+    for ( int i = 0; i < car_num; i++ )
+    {
+        if ( pCCD[i].Is_NID_Match( nid, 6 ) )
+        {
+            return i;
+        }
+    }
 
-	return -1;
+    return -1;
 }
-int CVirtualCCDManage::Return_Match_CCD_Subnet_Node(Byte subnet, Byte node)//返回 具有给定 CCD   NID  的索引
+int CVirtualCCDManage::Return_Match_CCD_Subnet_Node( Byte subnet, Byte node ) //返回 具有给定 CCD   NID  的索引
 {
-	for ( int i = 0; i < car_num; i++ )
-	{
-		if ( pCCD[i].Is_Subnet_Node( subnet, node ) )
-		{
-			return i;
-		}
-	}
+    for ( int i = 0; i < car_num; i++ )
+    {
+        if ( pCCD[i].Is_Subnet_Node( subnet, node ) )
+        {
+            return i;
+        }
+    }
 
-	return -1;
+    return -1;
 }

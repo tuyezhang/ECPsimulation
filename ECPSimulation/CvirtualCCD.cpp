@@ -226,103 +226,106 @@ bool  CvirtualCCD::Set_CCD_Lock( bool isLock )
 }
 void CvirtualCCD::Send_CCD_Info()
 {
-	Send_Msg_by_ID(MSG_CCD_DEVICE_INFO,UNACKD);
+    Send_Msg_by_ID( MSG_CCD_DEVICE_INFO, UNACKD );
 }
 
-void CvirtualCCD::Send_CCD_Info(int randomizing_interval)
+void CvirtualCCD::Send_CCD_Info( int randomizing_interval )
 {
-	srand((unsigned)time(0));
-	int ran_num=rand() % randomizing_interval;
-	m_Elapse = ran_num;
-	m_hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadFunc, (LPVOID)this, 0, NULL);
+    srand( ( unsigned )time( 0 ) );
+    int ran_num = rand() % randomizing_interval;
+    m_Elapse = ran_num;
+    m_hThread = CreateThread( NULL, 0, ( LPTHREAD_START_ROUTINE )ThreadFunc, ( LPVOID )this, 0, NULL );
 }
-DWORD WINAPI CvirtualCCD::ThreadFunc (LPVOID pParam)
+DWORD WINAPI CvirtualCCD::ThreadFunc ( LPVOID pParam )
 {
-	time_t t1, t2;
-	double  Diff = 0;
-	CvirtualCCD* pCCD = ((CvirtualCCD *)pParam);
-	/*获取系统当前时间*/
-	t1 = time(NULL);
-	int flag=true;
-	while(flag)
-	{
-		/*以秒为单位获取系统当前时间*/
-		t2 = time(NULL);
-		/*比较第二次获取的时间与第一次的时间是不是间隔了两秒*/
-		Diff = difftime(t2,t1);
-		/*间隔两秒打印Diff和i*/
-		if((int)Diff == pCCD->m_Elapse)
-		{
-			//cout<<"Time out!"<<endl;
-			pCCD->Send_CCD_Info();
-			t1 = t2;
-			flag=false;
-		}    
-	}
-	return 0;
+    time_t t1, t2;
+    double  Diff = 0;
+    CvirtualCCD* pCCD = ( ( CvirtualCCD * )pParam );
+    /*获取系统当前时间*/
+    t1 = time( NULL );
+    int flag = true;
+
+    while( flag )
+    {
+        /*以秒为单位获取系统当前时间*/
+        t2 = time( NULL );
+        /*比较第二次获取的时间与第一次的时间是不是间隔了两秒*/
+        Diff = difftime( t2, t1 );
+
+        /*间隔两秒打印Diff和i*/
+        if( ( int )Diff == pCCD->m_Elapse )
+        {
+            //cout<<"Time out!"<<endl;
+            pCCD->Send_CCD_Info();
+            t1 = t2;
+            flag = false;
+        }
+    }
+
+    return 0;
 }
 
-void CvirtualCCD::Set_CCD_Node_Information(int index)
+void CvirtualCCD::Set_CCD_Node_Information( int index )
 {
-	//设备节点信息初始化	 nid设定  最前面一位是01---到carnum
-	srand((unsigned)time(0));
-	int ran_num=rand() % 7+3;
-	int ran_num2=rand()%127+1;
-	int ran_nid2,ran_nid3,ran_nid4,ran_nid5,ran_nid6;
-	ran_nid2=rand() % 0xff+1;
-	ran_nid3=rand() % 0xff+1;
-	ran_nid4=rand() % 0xff+1;
-	ran_nid5=rand() % 0xff+1;
-	ran_nid6=rand() % 0xff+1;
-	Node_Info.Subnet=ran_num;
-	Node_Info.Node=ran_num2;
-	Node_Info.Neuron_ID[5]=ran_nid6;
-	Node_Info.Neuron_ID[4]=ran_nid5;
-	Node_Info.Neuron_ID[3]=ran_nid4;
-	Node_Info.Neuron_ID[2]=ran_nid3;
-	Node_Info.Neuron_ID[1]=ran_nid2;
-	Node_Info.Neuron_ID[0]=index;	
+    //设备节点信息初始化	 nid设定  最前面一位是01---到carnum
+    srand( ( unsigned )time( 0 ) );
+    int ran_num = rand() % 7 + 3;
+    int ran_num2 = rand() % 127 + 1;
+    int ran_nid2, ran_nid3, ran_nid4, ran_nid5, ran_nid6;
+    ran_nid2 = rand() % 0xff + 1;
+    ran_nid3 = rand() % 0xff + 1;
+    ran_nid4 = rand() % 0xff + 1;
+    ran_nid5 = rand() % 0xff + 1;
+    ran_nid6 = rand() % 0xff + 1;
+    Node_Info.Subnet = ran_num;
+    Node_Info.Node = ran_num2;
+    Node_Info.Neuron_ID[5] = ran_nid6;
+    Node_Info.Neuron_ID[4] = ran_nid5;
+    Node_Info.Neuron_ID[3] = ran_nid4;
+    Node_Info.Neuron_ID[2] = ran_nid3;
+    Node_Info.Neuron_ID[1] = ran_nid2;
+    Node_Info.Neuron_ID[0] = index;
 }
-void CvirtualCCD::Set_CCD_Car_Info(int index)
+void CvirtualCCD::Set_CCD_Car_Info( int index )
 {
-	srand((unsigned)time(0));
-	Device_Info.Manufacturer_Revision_Level=0;
-    Device_Info.S_4200_Compatibility_Version=2;
-	Device_Info.S_4230_Compatibility_Version=2;
-	Device_Info.Device_Characteristics=0;
-	Device_Info.Car_ID_Modules_Manufacturer=1;
-	//下面是car type  最后要达到的目的是 CAR00000xxx
-	string s="CAR00000000";
-	memcpy(Device_Info.Reporting_Mark,s.c_str(),11);
-	int ran_car=rand()%(200)+1;
-	Device_Info.Reporting_Mark[10]+=ran_car%10;
-	Device_Info.Reporting_Mark[9]+=(ran_car/10)%10;
-	Device_Info.Reporting_Mark[8]+=ran_car/100;
-	//其他数据默认设定
-	Device_Info.Car_Length.set(800);	
-	Device_Info.Num_Axles=4; 
-	Device_Info.Brakes_Controlled=40;
-	Device_Info.Empty_Weight.set(500);
-	Device_Info.Loaded_Weight.set(2860);
-	Device_Info.Break_Constant.set(572);
-	Device_Info.Reservoir_Constant.set(711);
-	Device_Info.Net_Braking_Ratio_Default=64;
-	Device_Info.Min_Service_Pressure=7;
-	Device_Info.Empty_Load_Device_Type=0;
-	Device_Info.Sequencing_Orientation=0;
-	//cat_type 设置成csrw
-	string s1="CSRW";
-	memcpy(Device_Info.Car_Type,s1.c_str(),4);
+    srand( ( unsigned )time( 0 ) );
+    Device_Info.Manufacturer_Revision_Level = 0;
+    Device_Info.S_4200_Compatibility_Version = 2;
+    Device_Info.S_4230_Compatibility_Version = 2;
+    Device_Info.Device_Characteristics = 0;
+    Device_Info.Car_ID_Modules_Manufacturer = 1;
+    //下面是car type  最后要达到的目的是 CAR00000xxx
+    string s = "CAR00000000";
+    memcpy( Device_Info.Reporting_Mark, s.c_str(), 11 );
+    int ran_car = rand() % ( 200 ) + 1;
+    Device_Info.Reporting_Mark[10] += ran_car % 10;
+    Device_Info.Reporting_Mark[9] += ( ran_car / 10 ) % 10;
+    Device_Info.Reporting_Mark[8] += ran_car / 100;
+    //其他数据默认设定
+    Device_Info.Car_Length.set( 800 );
+    Device_Info.Num_Axles = 4;
+    Device_Info.Brakes_Controlled = 40;
+    Device_Info.Empty_Weight.set( 500 );
+    Device_Info.Loaded_Weight.set( 2860 );
+    Device_Info.Break_Constant.set( 572 );
+    Device_Info.Reservoir_Constant.set( 711 );
+    Device_Info.Net_Braking_Ratio_Default = 64;
+    Device_Info.Min_Service_Pressure = 7;
+    Device_Info.Empty_Load_Device_Type = 0;
+    Device_Info.Sequencing_Orientation = 0;
+    //cat_type 设置成csrw
+    string s1 = "CSRW";
+    memcpy( Device_Info.Car_Type, s1.c_str(), 4 );
 }
-void CvirtualCCD::Set_CCD_Status(int index)
+void CvirtualCCD::Set_CCD_Status( int index )
 {
-	//设备状态信息
-	Dynamtic_Info.Brake_Pipe_Pressure=50;
-	Dynamtic_Info.Reservoir_Pressure=70;
-	Dynamtic_Info.Brake_Cylinder_Pressure=90;
-	Dynamtic_Info.Percent_Brake_Applied=index;
-	Dynamtic_Info.Car_Load=5;
-	Dynamtic_Info.Highest_Priority_Active_Exception.set(65535);	
-	Dynamtic_Info.Car_Status=3;
-	Lock_Status=LOCK;
+    //设备状态信息
+    Dynamtic_Info.Brake_Pipe_Pressure = 50;
+    Dynamtic_Info.Reservoir_Pressure = 70;
+    Dynamtic_Info.Brake_Cylinder_Pressure = 90;
+    Dynamtic_Info.Percent_Brake_Applied = index;
+    Dynamtic_Info.Car_Load = 5;
+    Dynamtic_Info.Highest_Priority_Active_Exception.set( 65535 );
+    Dynamtic_Info.Car_Status = 3;
+    Lock_Status = LOCK;
 }
