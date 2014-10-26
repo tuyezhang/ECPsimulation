@@ -40,6 +40,7 @@ class CECPSimulationDlg : public CDialogEx
         // 处理收到的数据
         void Handle_Message( void );
     private:
-        CLon2S4230 lonOP;
-        CHandleMessage handleOP;
+		CLon2S4230 lonOP;
+		CHandleMessage handleOP;
+
 };

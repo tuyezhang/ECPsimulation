@@ -6,6 +6,7 @@ using namespace std;
 
 CvirtualCCD::CvirtualCCD( void )
 {
+	 srand( ( unsigned )time( 0 ) );
 }
 
 
@@ -31,6 +32,7 @@ int CvirtualCCD::Send_Msg_by_ID( Byte msg_id, Byte msg_type, Byte msg_pri, Byte 
         {
 
             Set_Msg_data_7( msg_ver, length );
+		
         }
         break;
 
@@ -105,7 +107,7 @@ void CvirtualCCD:: Set_Msg_data_7( byte msg_ver, byte length )
     Msg_sCCD_Device_Info msg_send;
     msg_send.Manufacturer_ID = Device_Info.Car_ID_Modules_Manufacturer;
     memcpy( msg_send.Reporting_Mark, Device_Info.Reporting_Mark, 11 );
-    memcpy( msg_send.Unique_ID, Device_Info.Unique_ID, 6 );
+    memcpy( msg_send.Unique_ID, Node_Info.Neuron_ID, 6 );
     msg_send.Manufacturer_Revision_Level = Device_Info.Manufacturer_Revision_Level;
     msg_send.S_4200_Compatibility_Version = Device_Info.S_4200_Compatibility_Version;
     msg_send.S_4230_Compatibility_Version = Device_Info.S_4230_Compatibility_Version;
@@ -231,28 +233,30 @@ void CvirtualCCD::Send_CCD_Info()
 
 void CvirtualCCD::Send_CCD_Info( int randomizing_interval )
 {
-    srand( ( unsigned )time( 0 ) );
-    int ran_num = rand() % randomizing_interval;
-    m_Elapse = ran_num;
-    m_hThread = CreateThread( NULL, 0, ( LPTHREAD_START_ROUTINE )ThreadFunc, ( LPVOID )this, 0, NULL );
+   
+    //int ran_num = rand() % randomizing_interval;
+    //m_Elapse = ran_num;
+	
+   // m_hThread = CreateThread( NULL, 0, ( LPTHREAD_START_ROUTINE )ThreadFunc, ( LPVOID )this, 0, NULL );
 }
+/*
 DWORD WINAPI CvirtualCCD::ThreadFunc ( LPVOID pParam )
 {
     time_t t1, t2;
     double  Diff = 0;
     CvirtualCCD* pCCD = ( ( CvirtualCCD * )pParam );
-    /*获取系统当前时间*/
+  
     t1 = time( NULL );
     int flag = true;
 
     while( flag )
     {
-        /*以秒为单位获取系统当前时间*/
+       
         t2 = time( NULL );
-        /*比较第二次获取的时间与第一次的时间是不是间隔了两秒*/
+     
         Diff = difftime( t2, t1 );
 
-        /*间隔两秒打印Diff和i*/
+      
         if( ( int )Diff == pCCD->m_Elapse )
         {
             //cout<<"Time out!"<<endl;
@@ -264,11 +268,11 @@ DWORD WINAPI CvirtualCCD::ThreadFunc ( LPVOID pParam )
 
     return 0;
 }
-
+*/
 void CvirtualCCD::Set_CCD_Node_Information( int index )
 {
     //设备节点信息初始化	 nid设定  最前面一位是01---到carnum
-    srand( ( unsigned )time( 0 ) );
+    
     int ran_num = rand() % 7 + 3;
     int ran_num2 = rand() % 127 + 1;
     int ran_nid2, ran_nid3, ran_nid4, ran_nid5, ran_nid6;
@@ -288,7 +292,7 @@ void CvirtualCCD::Set_CCD_Node_Information( int index )
 }
 void CvirtualCCD::Set_CCD_Car_Info( int index )
 {
-    srand( ( unsigned )time( 0 ) );
+   
     Device_Info.Manufacturer_Revision_Level = 0;
     Device_Info.S_4200_Compatibility_Version = 2;
     Device_Info.S_4230_Compatibility_Version = 2;

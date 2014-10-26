@@ -15,6 +15,7 @@ CVirtualCCDManage::CVirtualCCDManage( void )
 
 CVirtualCCDManage::~CVirtualCCDManage( void )
 {
+	delete[]pCCD;
 }
 
 CvirtualCCD *CVirtualCCDManage::Get_CCD_pObj( int i )
@@ -30,7 +31,7 @@ void CVirtualCCDManage::Set_CCD_Num( int ccd_num )
 {
     CvirtualCCD *pCCDtemp = pCCD;
     car_num = ccd_num;
-    CvirtualCCD *pCCD = new CvirtualCCD[car_num];
+    pCCD = new CvirtualCCD[car_num];
     delete []pCCDtemp;
     Set_CCD_ALL_Data();
 
@@ -106,8 +107,14 @@ void CVirtualCCDManage::Send_CCD_Info_ALL( int randomizing_interval )
 {
     for( int i = 0; i < car_num; i++ )
     {
-        pCCD[i].Send_CCD_Info( randomizing_interval );
+		if (pCCD[i].Lock_Status==UNLOCK)
+		{
+			Sleep(100);
+			pCCD[i].Send_CCD_Info(  );
+		}
+		
     }
+	int a=1;
 }
 
 void CVirtualCCDManage::Set_CCD_Node_Information()

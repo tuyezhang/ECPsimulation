@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "HandleMessage.h"
 #include "sunnyDefine.h"
-
+CVirtualCCDManage ccdManageOP;
 CHandleMessage::CHandleMessage( void )
 {
 }

@@ -10,7 +10,7 @@
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
+extern CVirtualCCDManage ccdManageOP;
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
@@ -182,7 +182,9 @@ void CECPSimulationDlg::SendMessageByID(int messageID)
 				lonOP.msg_put(UNACKD,NONPRIORITY);
 		   }
 		   break;
-	case 1:{}
+	case 1:{
+		    ccdManageOP.Get_CCD_pObj(0)->Send_Msg_by_ID(7,UNACKD);
+		   }
 		   break;
 	default:
 		break;
@@ -196,7 +198,10 @@ void CECPSimulationDlg::OnTimer(UINT_PTR nIDEvent)
 			{
 				case 1:
 					{
-					   lonOP.Read(100);
+					   if(lonOP.Read(100)!=0)
+					   {
+						   return;
+					   }
 					   Handle_Message();
 					}
 			}
@@ -219,4 +224,5 @@ void CECPSimulationDlg::Handle_Message(void)
 				default:
 					break; 
 			}
+		
 	}
