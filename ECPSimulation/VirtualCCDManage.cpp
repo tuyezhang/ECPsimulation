@@ -109,12 +109,12 @@ void CVirtualCCDManage::Send_CCD_Info_ALL( int randomizing_interval )
     {
 		if (pCCD[i].Lock_Status==UNLOCK)
 		{
-			Sleep(100);
-			pCCD[i].Send_CCD_Info(  );
+			//Sleep(100);
+			pCCD[i].Send_CCD_Info( randomizing_interval );
 		}
 		
     }
-	int a=1;
+	
 }
 
 void CVirtualCCDManage::Set_CCD_Node_Information()

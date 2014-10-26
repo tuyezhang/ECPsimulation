@@ -46,9 +46,9 @@ class CvirtualCCD
         void Set_Msg_data_27( byte msg_ver, byte length ); //设置发送的27号报文数据
 		CUtil util;
 		CLon2S4230 lonop;	
-		/*
+		
 		HANDLE m_hThread;
 		static DWORD WINAPI ThreadFunc (LPVOID pParam);
-		*/
+		
 };
 

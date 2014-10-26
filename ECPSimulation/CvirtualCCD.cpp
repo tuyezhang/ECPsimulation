@@ -234,12 +234,12 @@ void CvirtualCCD::Send_CCD_Info()
 void CvirtualCCD::Send_CCD_Info( int randomizing_interval )
 {
    
-    //int ran_num = rand() % randomizing_interval;
-    //m_Elapse = ran_num;
+    int ran_num = rand() % randomizing_interval;
+    m_Elapse = ran_num;
 	
-   // m_hThread = CreateThread( NULL, 0, ( LPTHREAD_START_ROUTINE )ThreadFunc, ( LPVOID )this, 0, NULL );
+    m_hThread = CreateThread( NULL, 0, ( LPTHREAD_START_ROUTINE )ThreadFunc, ( LPVOID )this, 0, NULL );
 }
-/*
+
 DWORD WINAPI CvirtualCCD::ThreadFunc ( LPVOID pParam )
 {
     time_t t1, t2;
@@ -259,7 +259,7 @@ DWORD WINAPI CvirtualCCD::ThreadFunc ( LPVOID pParam )
       
         if( ( int )Diff == pCCD->m_Elapse )
         {
-            //cout<<"Time out!"<<endl;
+          
             pCCD->Send_CCD_Info();
             t1 = t2;
             flag = false;
@@ -268,7 +268,7 @@ DWORD WINAPI CvirtualCCD::ThreadFunc ( LPVOID pParam )
 
     return 0;
 }
-*/
+
 void CvirtualCCD::Set_CCD_Node_Information( int index )
 {
     //设备节点信息初始化	 nid设定  最前面一位是01---到carnum
